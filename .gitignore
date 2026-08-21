@@ -1,0 +1,11 @@
+# Logs & temp
+node_modules/
+dist/
+vendor/
+.env
+*.log
+deploy.zip
+*.pyc
+__pycache__/
+.vscode/
+.idea/
