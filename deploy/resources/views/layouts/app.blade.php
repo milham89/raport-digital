@@ -74,8 +74,8 @@
   .input { @apply w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white; }
   .select { @apply w-full border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white; }
   .label { @apply block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider; }
-  .table-head { @apply bg-slate-50 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 text-left border-b border-slate-200; }
-  .table-cell { @apply px-4 py-3.5 text-sm text-slate-700 border-b border-slate-100; }
+  .table-head { @apply bg-slate-50 text-xs font-semibold text-slate-500 uppercase tracking-wider px-3.5 py-3 text-left border-b border-slate-200 whitespace-nowrap; }
+  .table-cell { @apply px-3.5 py-2.5 text-sm text-slate-700 border-b border-slate-100; }
   .sidebar-section { @apply px-4 pt-5 pb-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-widest; }
 </style>
 </head>
@@ -88,20 +88,20 @@
 <div class="flex h-full min-h-screen">
     @include('layouts.sidebar')
     <div x-show="sidebarOpen" @click="sidebarOpen=false" class="fixed inset-0 z-30 bg-slate-900/60 backdrop-blur-sm lg:hidden" style="display:none"></div>
-    <div class="flex-1 flex flex-col min-h-screen lg:ml-64">
+    <div class="flex-1 flex flex-col min-w-0 min-h-screen lg:ml-64">
         <header class="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-slate-200/80 px-4 sm:px-6 py-3.5 flex items-center justify-between shadow-sm">
-            <div class="flex items-center gap-3">
-                <button @click="sidebarOpen=true" class="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100">
+            <div class="flex items-center gap-3 min-w-0">
+                <button @click="sidebarOpen=true" class="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 flex-shrink-0" aria-label="Buka Menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <h1 class="text-base font-bold text-slate-800">@yield('page-title','Dashboard')</h1>
+                <h1 class="text-base font-bold text-slate-800 truncate">@yield('page-title','Dashboard')</h1>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 flex-shrink-0">
                 <span class="hidden sm:inline-flex badge {{ $roleColors[auth()->user()->role] ?? 'bg-slate-100 text-slate-700' }}">{{ $roleLabels[auth()->user()->role] ?? auth()->user()->role }}</span>
                 <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-sm">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
             </div>
         </header>
-        <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main class="flex-1 p-3 sm:p-5 lg:p-6 w-full max-w-full min-w-0">
             @if(session('success'))
                 <div class="mb-5 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-2xl text-sm font-medium">{{ session('success') }}</div>
             @endif
