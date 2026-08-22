@@ -10,6 +10,8 @@ use App\Models\Subject;
 use App\Models\TeacherAssignment;
 use App\Models\Student;
 use App\Models\SchoolSetting;
+use App\Models\Grade;
+use App\Models\StudentAttendanceRemark;
 
 class AdminController extends Controller
 {
