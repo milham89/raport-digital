@@ -62,9 +62,9 @@ class AdminController extends Controller
 
     public function activateYear(AcademicYear $year)
     {
-        AcademicYear::query()->update(['is_active'=>false]);
-        $year->update(['is_active'=>true]);
-        return back()->with('success','Tahun ajaran diaktifkan.');
+        AcademicYear::query()->update(['is_active' => false]);
+        $year->update(['is_active' => true]);
+        return redirect()->route('admin.academic-years')->with('success', 'Tahun ajaran ' . $year->year . ' (' . $year->semester . ') berhasil diaktifkan.');
     }
 
     public function destroyAcademicYear(AcademicYear $year)

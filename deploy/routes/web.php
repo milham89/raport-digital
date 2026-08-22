@@ -26,7 +26,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::delete('/users/{user}',                 [AdminController::class,'destroyUser'])->name('users.destroy');
     Route::get('/academic-years',                  [AdminController::class,'academicYears'])->name('academic-years');
     Route::post('/academic-years',                 [AdminController::class,'storeAcademicYear'])->name('academic-years.store');
-    Route::patch('/academic-years/{year}/activate',[AdminController::class,'activateYear'])->name('academic-years.activate');
+    Route::match(['POST', 'PATCH', 'GET'], '/academic-years/{year}/activate', [AdminController::class,'activateYear'])->name('academic-years.activate');
     Route::delete('/academic-years/{year}',         [AdminController::class,'destroyAcademicYear'])->name('academic-years.destroy');
     Route::get('/classes',                         [AdminController::class,'classes'])->name('classes');
     Route::post('/classes',                        [AdminController::class,'storeClass'])->name('classes.store');
