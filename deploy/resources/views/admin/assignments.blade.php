@@ -4,7 +4,7 @@
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="card h-fit">
-        <h3 class="font-bold text-slate-800 mb-4 text-base">+ Tambah Penugasan</h3>
+        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-4 text-base">+ Tambah Penugasan</h3>
         <form method="POST" action="{{ route('admin.assignments.store') }}" class="space-y-4">
             @csrf
             <div><label class="label">Guru</label>
@@ -41,13 +41,13 @@
     <div class="lg:col-span-2 card overflow-hidden p-0">
         <div class="overflow-x-auto"><table class="w-full">
             <thead><tr><th class="table-head">Nama Guru</th><th class="table-head">Mata Pelajaran</th><th class="table-head">Kelas</th><th class="table-head">Tahun</th><th class="table-head text-right">Aksi</th></tr></thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                 @foreach($assignments as $a)
-                <tr class="hover:bg-slate-50">
-                    <td class="table-cell font-semibold text-slate-800">{{ $a->teacher->name ?? '-' }}</td>
-                    <td class="table-cell font-medium text-blue-600">{{ $a->subject->name ?? '-' }}</td>
-                    <td class="table-cell font-bold text-slate-700">{{ $a->schoolClass->name ?? '-' }}</td>
-                    <td class="table-cell text-xs text-slate-500">{{ $a->academicYear->year ?? '-' }}</td>
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td class="table-cell font-semibold text-slate-800 dark:text-slate-200">{{ $a->teacher->name ?? '-' }}</td>
+                    <td class="table-cell font-medium text-blue-600 dark:text-blue-400">{{ $a->subject->name ?? '-' }}</td>
+                    <td class="table-cell font-bold text-slate-700 dark:text-slate-300">{{ $a->schoolClass->name ?? '-' }}</td>
+                    <td class="table-cell text-xs text-slate-500 dark:text-slate-400">{{ $a->academicYear->year ?? '-' }}</td>
                     <td class="table-cell text-right">
                         <form method="POST" action="{{ route('admin.assignments.destroy', $a) }}" class="inline" onsubmit="return confirm('Hapus penugasan?')">
                             @csrf @method('DELETE')

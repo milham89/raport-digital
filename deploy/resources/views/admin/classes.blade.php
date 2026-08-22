@@ -4,7 +4,7 @@
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="card h-fit">
-        <h3 class="font-bold text-slate-800 mb-4 text-base">+ Tambah Kelas Baru</h3>
+        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-4 text-base">+ Tambah Kelas Baru</h3>
         <form method="POST" action="{{ route('admin.classes.store') }}" class="space-y-4">
             @csrf
             <div><label class="label">Nama Kelas</label><input type="text" name="name" placeholder="X IPA 1" required class="input"></div>
@@ -30,13 +30,13 @@
     <div class="lg:col-span-2 card overflow-hidden p-0">
         <div class="overflow-x-auto"><table class="w-full">
             <thead><tr><th class="table-head">Nama Kelas</th><th class="table-head">Tingkat</th><th class="table-head">Wali Kelas</th><th class="table-head">Tahun</th><th class="table-head text-right">Aksi</th></tr></thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                 @foreach($classes as $class)
-                <tr class="hover:bg-slate-50">
-                    <td class="table-cell font-bold text-slate-800">{{ $class->name }}</td>
-                    <td class="table-cell text-slate-500">Kelas {{ $class->grade_level }}</td>
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td class="table-cell font-bold text-slate-800 dark:text-slate-200">{{ $class->name }}</td>
+                    <td class="table-cell text-slate-500 dark:text-slate-400">Kelas {{ $class->grade_level }}</td>
                     <td class="table-cell font-medium">{{ $class->homeroomTeacher->name ?? 'Belum Ditentukan' }}</td>
-                    <td class="table-cell text-xs text-slate-500">{{ $class->academicYear->year ?? '-' }} ({{ $class->academicYear->semester ?? '-' }})</td>
+                    <td class="table-cell text-xs text-slate-500 dark:text-slate-400">{{ $class->academicYear->year ?? '-' }} ({{ $class->academicYear->semester ?? '-' }})</td>
                     <td class="table-cell text-right">
                         <form method="POST" action="{{ route('admin.classes.destroy', $class) }}" class="inline" onsubmit="return confirm('Hapus kelas?')">
                             @csrf @method('DELETE')

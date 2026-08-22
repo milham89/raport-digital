@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full" x-data="{ 
-    darkMode: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-}" :class="{ 'dark': darkMode }">
+<html lang="id" class="h-full">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>@yield('title','Raport Digital') - SMA</title>
+<script>
+    // Runs before any render — prevents flash of wrong theme
+    (function() {
+        var dark = localStorage.getItem('theme') === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+    })();
+</script>
+<meta name="color-scheme" content="light dark">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-    tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {}
-        }
-    }
+    tailwind.config = { darkMode: 'class' };
 </script>
 <style>
   /* Reset input number to remove spinners and ensure clear visible text */
@@ -85,6 +87,46 @@
   .dark .input-number:focus {
     background-color: #1e293b !important;
   }
+
+  /* Date & Month Picker Indicator in Dark Mode */
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="month"]::-webkit-calendar-picker-indicator,
+  .dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8) brightness(1.2);
+    cursor: pointer;
+  }
+
+  /* Dark mode select options */
+  .dark select option {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+
+  /* Smooth Custom Scrollbar for dark/light mode */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: #090d16;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
 </style>
 <style type="text/tailwindcss">
   .nav-link { @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition text-sm font-medium; }
@@ -97,15 +139,15 @@
   .btn-info { @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition text-xs font-semibold border border-blue-200 dark:border-blue-800/60 cursor-pointer; }
 
   .badge { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; }
-  .input { @apply w-full border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-950 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-slate-100; }
-  .select { @apply w-full border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100; }
+  .input { @apply w-full border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-900 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-slate-100; }
+  .select { @apply w-full border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100; }
   .label { @apply block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wider; }
   .table-head { @apply bg-slate-50 dark:bg-slate-800/80 text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider px-3.5 py-3 text-left border-b border-slate-200 dark:border-slate-800 whitespace-nowrap; }
   .table-cell { @apply px-3.5 py-2.5 text-sm text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800; }
   .sidebar-section { @apply px-4 pt-5 pb-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-widest; }
 </style>
 </head>
-<body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased" x-data="{ sidebarOpen: false }">
+<body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-200" x-data="{ sidebarOpen: false }">
 @auth
 @php
     $roleLabels = ['admin'=>'Administrator','teacher'=>'Guru Mapel','homeroom'=>'Wali Kelas','principal'=>'Kepala Sekolah','student'=>'Siswa'];
@@ -125,16 +167,16 @@
             <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <!-- Dark Mode Toggle Button -->
                 <button type="button" 
-                        @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')" 
-                        class="p-2 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                        :title="darkMode ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'"
-                        aria-label="Toggle Dark Mode">
-                    <!-- Sun Icon (shown when dark) -->
-                    <svg x-show="darkMode" class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                        onclick="(function(){ var d=document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', d?'dark':'light'); })()"
+                        id="theme-toggle"
+                        class="p-2 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+                        aria-label="Ganti Tema">
+                    <!-- Sun icon: visible in dark mode -->
+                    <svg class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
-                    <!-- Moon Icon (shown when light) -->
-                    <svg x-show="!darkMode" class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- Moon icon: visible in light mode -->
+                    <svg class="w-5 h-5 block dark:hidden text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>

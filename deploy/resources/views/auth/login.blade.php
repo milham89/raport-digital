@@ -11,9 +11,9 @@
     </div>
 
     <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-6 sm:px-8 shadow-2xl rounded-3xl border border-slate-100">
+        <div class="bg-slate-800/90 py-8 px-6 sm:px-8 shadow-2xl rounded-3xl border border-slate-700/80 backdrop-blur">
             @if($errors->any())
-                <div class="mb-4 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl p-3 font-medium">
+                <div class="mb-4 bg-rose-950/40 border border-rose-800/60 text-rose-300 text-xs rounded-xl p-3 font-medium">
                     @foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach
                 </div>
             @endif
@@ -21,19 +21,19 @@
             <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="label">Email / NIS / NIP</label>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Email / NIS / NIP</label>
                     <input type="text" name="login" value="{{ old('login') }}" required autofocus
-                           class="input" placeholder="Masukkan Email, NIS siswa, atau NIP guru">
+                           class="w-full border border-slate-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-900 placeholder-slate-500 text-slate-100" placeholder="Masukkan Email, NIS siswa, atau NIP guru">
                 </div>
 
                 <div>
-                    <label class="label">Password</label>
-                    <input type="password" name="password" required class="input" placeholder="••••••••">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Password</label>
+                    <input type="password" name="password" required class="w-full border border-slate-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-900 placeholder-slate-500 text-slate-100" placeholder="••••••••">
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <label class="flex items-center text-slate-600 text-xs cursor-pointer">
-                        <input type="checkbox" name="remember" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                    <label class="flex items-center text-slate-400 text-xs cursor-pointer">
+                        <input type="checkbox" name="remember" class="rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-blue-500">
                         <span class="ml-2">Ingat saya</span>
                     </label>
                 </div>

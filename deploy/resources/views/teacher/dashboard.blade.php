@@ -12,18 +12,18 @@
         <div class="card hover:shadow-md transition">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="badge bg-blue-50 text-blue-700 mb-2">{{ $a->schoolClass->name ?? '-' }}</span>
-                    <h3 class="font-bold text-slate-800 text-lg">{{ $a->subject->name ?? '-' }}</h3>
-                    <p class="text-xs text-slate-500 mt-1">KKM Mapel: <span class="font-semibold text-slate-700">{{ $a->subject->kkm ?? 75 }}</span></p>
+                    <span class="badge bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 mb-2">{{ $a->schoolClass->name ?? '-' }}</span>
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-lg">{{ $a->subject->name ?? '-' }}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">KKM Mapel: <span class="font-semibold text-slate-700 dark:text-slate-200">{{ $a->subject->kkm ?? 75 }}</span></p>
                 </div>
             </div>
-            <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-                <span class="text-xs text-slate-400">{{ $a->academicYear->year ?? '-' }} ({{ $a->academicYear->semester ?? '-' }})</span>
+            <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">{{ $a->academicYear->year ?? '-' }} ({{ $a->academicYear->semester ?? '-' }})</span>
                 <a href="{{ route('teacher.grades', $a) }}" class="btn-primary">Input Nilai &rarr;</a>
             </div>
         </div>
         @empty
-        <div class="col-span-full card text-center py-12 text-slate-400">Belum ada kelas/mapel yang ditugaskan kepada Anda.</div>
+        <div class="col-span-full card text-center py-12 text-slate-500 dark:text-slate-400">Belum ada kelas/mapel yang ditugaskan kepada Anda.</div>
         @endforelse
     </div>
 </div>

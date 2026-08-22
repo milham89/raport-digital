@@ -13,18 +13,18 @@
         <div class="card hover:shadow-md transition">
             <div class="flex items-start justify-between">
                 <div>
-                    <span class="badge bg-amber-50 text-amber-700 mb-2">Tingkat {{ $c->grade_level }}</span>
-                    <h3 class="font-bold text-slate-800 text-lg">{{ $c->name }}</h3>
-                    <p class="text-xs text-slate-500 mt-1">Wali: <span class="font-semibold text-slate-700">{{ $c->homeroomTeacher->name ?? 'Belum ada' }}</span></p>
+                    <span class="badge bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 mb-2">Tingkat {{ $c->grade_level }}</span>
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-lg">{{ $c->name }}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Wali: <span class="font-semibold text-slate-700 dark:text-slate-200">{{ $c->homeroomTeacher->name ?? 'Belum ada' }}</span></p>
                 </div>
             </div>
-            <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-                <span class="text-xs text-slate-400 font-medium">{{ $c->students->count() }} Siswa</span>
+            <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ $c->students->count() }} Siswa</span>
                 <a href="{{ route('principal.class-report', $c) }}" class="btn-primary !bg-amber-600 hover:!bg-amber-700">Lihat Rekap &rarr;</a>
             </div>
         </div>
         @empty
-        <div class="col-span-full card text-center py-12 text-slate-400">Belum ada kelas terdaftar.</div>
+        <div class="col-span-full card text-center py-12 text-slate-500 dark:text-slate-400">Belum ada kelas terdaftar.</div>
         @endforelse
     </div>
 </div>

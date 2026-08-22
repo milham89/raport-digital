@@ -19,8 +19,8 @@
         </div>
         <div><label class="label">Password {{ isset($user) ? '(Kosongkan jika tidak diubah)' : '' }}</label><input type="password" name="password" {{ isset($user) ? '' : 'required' }} class="input"></div>
         <div class="flex items-center gap-2 pt-2">
-            <input type="checkbox" name="is_active" value="1" id="is_active" {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }} class="rounded border-slate-300 text-blue-600">
-            <label for="is_active" class="text-sm font-medium text-slate-700">Akun Aktif</label>
+            <input type="checkbox" name="is_active" value="1" id="is_active" {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }} class="rounded border-slate-300 dark:border-slate-700 text-blue-600">
+            <label for="is_active" class="text-sm font-medium text-slate-700 dark:text-slate-300">Akun Aktif</label>
         </div>
         <div class="pt-4 flex justify-end gap-3">
             <a href="{{ route('admin.users') }}" class="btn-secondary">Batal</a>
