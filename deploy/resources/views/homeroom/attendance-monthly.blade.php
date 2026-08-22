@@ -8,11 +8,11 @@
     <div class="card flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2">
-                <span class="badge bg-emerald-100 text-emerald-700">Senin - Jum'at (5 Hari Belajar)</span>
+                <span class="badge bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">Senin - Jum'at (5 Hari Belajar)</span>
                 <span class="text-xs text-slate-400 font-mono">{{ $activeYear ? $activeYear->year : '' }} ({{ $activeYear ? $activeYear->semester : '' }})</span>
             </div>
-            <h2 class="font-bold text-slate-800 text-lg mt-1">Rekap Presensi Bulanan: Kelas {{ $class ? $class->name : '' }}</h2>
-            <p class="text-xs text-slate-500">Tampilan kalender absensi siswa bulan {{ $selectedMonth->format('F Y') }}.</p>
+            <h2 class="font-bold text-slate-800 dark:text-slate-100 text-lg mt-1">Rekap Presensi Bulanan: Kelas {{ $class ? $class->name : '' }}</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Tampilan kalender absensi siswa bulan {{ $selectedMonth->format('F Y') }}.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -21,7 +21,7 @@
             </a>
             <form method="POST" action="{{ route('homeroom.attendance.sync') }}" onsubmit="return confirm('Sinkronkan seluruh rekap absensi semester ini berdasarkan absensi harian yang telah diinput?')">
                 @csrf
-                <button type="submit" class="btn-secondary !text-xs font-semibold text-blue-600">
+                <button type="submit" class="btn-secondary !text-xs font-semibold text-blue-600 dark:text-blue-400">
                     &#x21bb; Sinkronkan ke Rapor
                 </button>
             </form>
@@ -31,17 +31,17 @@
         </div>
     </div>
 
-    <!-- Month Picker (Clean Light Card) -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+    <!-- Month Picker -->
+    <div class="card p-4">
         <form method="GET" action="{{ route('homeroom.attendance.monthly') }}" class="flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-2">
-                <label for="month_input" class="text-xs text-slate-600 font-bold">Pilih Bulan & Tahun:</label>
+                <label for="month_input" class="text-xs text-slate-600 dark:text-slate-300 font-bold">Pilih Bulan & Tahun:</label>
                 <input type="month" id="month_input" name="month" value="{{ $selectedMonth->format('Y-m') }}" onchange="this.form.submit()"
-                       class="bg-slate-50 text-slate-800 border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
-                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">Tampilkan</button>
+                       class="input !py-1.5 text-sm font-semibold !w-auto">
+                <button type="submit" class="btn-primary !py-1.5 !px-4 text-xs font-bold shadow-sm">Tampilkan</button>
             </div>
-            <div class="text-xs text-slate-600">
-                Bulan: <strong class="text-slate-900 uppercase font-bold">{{ $selectedMonth->format('F Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-blue-600 font-bold">{{ count($weekdays) }} Hari</strong>
+            <div class="text-xs text-slate-600 dark:text-slate-300">
+                Bulan: <strong class="text-slate-900 dark:text-slate-100 uppercase font-bold">{{ $selectedMonth->format('F Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-blue-600 dark:text-blue-400 font-bold">{{ count($weekdays) }} Hari</strong>
             </div>
         </form>
     </div>
