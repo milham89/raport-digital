@@ -9,9 +9,9 @@
         <div>
             <div class="flex items-center gap-2">
                 <span class="badge bg-emerald-100 text-emerald-700">Senin - Jum'at (5 Hari Belajar)</span>
-                <span class="text-xs text-slate-400 font-mono">{{ $activeYear?->year }} ({{ $activeYear?->semester }})</span>
+                <span class="text-xs text-slate-400 font-mono">{{ $activeYear ? $activeYear->year : '' }} ({{ $activeYear ? $activeYear->semester : '' }})</span>
             </div>
-            <h2 class="font-bold text-slate-800 text-lg mt-1">Rekap Presensi Bulanan: Kelas {{ $class->name ?? '' }}</h2>
+            <h2 class="font-bold text-slate-800 text-lg mt-1">Rekap Presensi Bulanan: Kelas {{ $class ? $class->name : '' }}</h2>
             <p class="text-xs text-slate-500">Tampilan kalender absensi siswa bulan {{ $selectedMonth->format('F Y') }}.</p>
         </div>
 

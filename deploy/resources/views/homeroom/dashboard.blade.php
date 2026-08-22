@@ -5,7 +5,7 @@
 <div class="space-y-6">
     <div class="card bg-gradient-to-r from-emerald-600 to-teal-700 text-white border-0 shadow-lg">
         <h2 class="text-xl font-bold">Wali Kelas: {{ $class ? $class->name : 'Belum Ditugaskan' }}</h2>
-        <p class="text-emerald-100 text-sm mt-1">Tahun Ajaran: {{ $activeYear?->year }} ({{ $activeYear?->semester }}) &bull; Total Siswa: {{ $students->count() }} orang</p>
+        <p class="text-emerald-100 text-sm mt-1">Tahun Ajaran: {{ $activeYear ? $activeYear->year : '' }} ({{ $activeYear ? $activeYear->semester : '' }}) &bull; Total Siswa: {{ $students->count() }} orang</p>
     </div>
 
     @if($class)
@@ -32,7 +32,7 @@
                     <td class="table-cell font-mono text-xs">{{ $s->nis }}</td>
                     <td class="table-cell font-semibold text-slate-800">{{ $s->name }}</td>
                     <td class="table-cell text-center font-bold text-blue-600">{{ $avg }}</td>
-                    <td class="table-cell text-center text-xs text-slate-500">{{ $rem?->sick ?? 0 }} / {{ $rem?->permission ?? 0 }} / {{ $rem?->unexcused ?? 0 }}</td>
+                    <td class="table-cell text-center text-xs text-slate-500">{{ $rem && isset($rem->sick) ? $rem->sick : 0 }} / {{ $rem && isset($rem->permission) ? $rem->permission : 0 }} / {{ $rem && isset($rem->unexcused) ? $rem->unexcused : 0 }}</td>
                     <td class="table-cell text-right">
                         <a href="{{ route('homeroom.report-card', $s) }}" target="_blank" class="btn-secondary !py-1 !text-xs font-semibold">Lihat / Cetak Raport</a>
                     </td>

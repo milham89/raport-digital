@@ -5,8 +5,8 @@
 <div class="space-y-6">
     <div class="card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h2 class="font-bold text-slate-800 text-lg">Catatan & Absensi Kelas {{ $class->name ?? '' }}</h2>
-            <p class="text-xs text-slate-500">Tahun Ajaran: {{ $activeYear?->year }} ({{ $activeYear?->semester }}) &bull; Nilai S/I/A akan tertera di cetak raport.</p>
+            <h2 class="font-bold text-slate-800 text-lg">Catatan & Absensi Kelas {{ $class ? $class->name : '' }}</h2>
+            <p class="text-xs text-slate-500">Tahun Ajaran: {{ $activeYear ? $activeYear->year : '' }} ({{ $activeYear ? $activeYear->semester : '' }}) &bull; Nilai S/I/A akan tertera di cetak raport.</p>
         </div>
         <div class="flex items-center gap-2">
             <a href="{{ route('homeroom.attendance.daily') }}" class="btn-primary !text-xs font-semibold">
@@ -39,10 +39,10 @@
                         <td class="table-cell font-semibold text-slate-800 whitespace-nowrap py-3">
                             {{ $s->name }}<br><span class="text-xs text-slate-400 font-mono">{{ $s->nis }}</span>
                         </td>
-                        <td class="table-cell text-center px-2 py-3"><input type="number" min="0" name="remarks[{{ $s->id }}][sick]" value="{{ $rem?->sick ?? 0 }}" class="input-number w-16" placeholder="0"></td>
-                        <td class="table-cell text-center px-2 py-3"><input type="number" min="0" name="remarks[{{ $s->id }}][permission]" value="{{ $rem?->permission ?? 0 }}" class="input-number w-16" placeholder="0"></td>
-                        <td class="table-cell text-center px-2 py-3"><input type="number" min="0" name="remarks[{{ $s->id }}][unexcused]" value="{{ $rem?->unexcused ?? 0 }}" class="input-number w-16" placeholder="0"></td>
-                        <td class="table-cell py-3"><input type="text" name="remarks[{{ $s->id }}][homeroom_note]" value="{{ $rem?->homeroom_remark ?? ($rem?->homeroom_note ?? '') }}" placeholder="Masukkan catatan perkembangan..." class="input !py-1.5 text-sm"></td>
+                        <td class="table-cell text-center px-2 py-3"><input type="number" min="0" name="remarks[{{ $s->id }}][sick]" value="{{ $rem && isset($rem->sick) ? $rem->sick : 0 }}" class="input-number w-16" placeholder="0"></td>
+                        <td class="table-cell text-center px-2 py-3"><input type="number" min="0" name="remarks[{{ $s->id }}][permission]" value="{{ $rem && isset($rem->permission) ? $rem->permission : 0 }}" class="input-number w-16" placeholder="0"></td>
+                        <td class="table-cell text-center px-2 py-3"><input type="number" min="0" name="remarks[{{ $s->id }}][unexcused]" value="{{ $rem && isset($rem->unexcused) ? $rem->unexcused : 0 }}" class="input-number w-16" placeholder="0"></td>
+                        <td class="table-cell py-3"><input type="text" name="remarks[{{ $s->id }}][homeroom_note]" value="{{ $rem ? ($rem->homeroom_remark ?? ($rem->homeroom_note ?? '')) : '' }}" placeholder="Masukkan catatan perkembangan..." class="input !py-1.5 text-sm"></td>
                     </tr>
                     @endforeach
                 </tbody>

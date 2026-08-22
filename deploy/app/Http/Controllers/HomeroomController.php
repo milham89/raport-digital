@@ -25,8 +25,8 @@ class HomeroomController extends Controller
         $class = $this->myClass();
         $activeYear = AcademicYear::where('is_active', true)->first();
         $students = $class ? Student::where('class_id', $class->id)->orderBy('name')->get() : collect();
-        $grades = [];
-        $remarks = [];
+        $grades = collect();
+        $remarks = collect();
 
         if ($class && $activeYear) {
             $grades = Grade::whereIn('student_id', $students->pluck('id'))
@@ -40,7 +40,7 @@ class HomeroomController extends Controller
                 ->keyBy('student_id');
         }
 
-        $finalized = $class && $activeYear ? StudentAttendanceRemark::where('class_id', $class->id)->where('academic_year_id', $activeYear->id)->where('status','FINALIZED')->count() : 0;
+        $finalized = ($class && $activeYear) ? StudentAttendanceRemark::where('class_id', $class->id)->where('academic_year_id', $activeYear->id)->where('status','FINALIZED')->count() : 0;
         return view('homeroom.dashboard', compact('class','activeYear','students','grades','remarks','finalized'));
     }
 
@@ -52,19 +52,19 @@ class HomeroomController extends Controller
 
         $dateStr = $request->input('date', date('Y-m-d'));
         try {
-            $selectedDate = Carbon::createFromFormat('Y-m-d', $dateStr);
+            $selectedDate = Carbon::parse($dateStr);
         } catch (\Exception $e) {
             $selectedDate = Carbon::today();
         }
 
         $isWeekend = $selectedDate->isWeekend();
 
-        $prevDate = (clone $selectedDate)->subDay();
+        $prevDate = $selectedDate->copy()->subDay();
         while ($prevDate->isWeekend()) {
             $prevDate->subDay();
         }
 
-        $nextDate = (clone $selectedDate)->addDay();
+        $nextDate = $selectedDate->copy()->addDay();
         while ($nextDate->isWeekend()) {
             $nextDate->addDay();
         }
@@ -120,7 +120,7 @@ class HomeroomController extends Controller
         }
 
         return redirect()->route('homeroom.attendance.daily', ['date' => $date])
-            ->with('success', 'Absensi tanggal ' . Carbon::parse($date)->translatedFormat('d F Y') . ' berhasil disimpan dan otomatis disinkronkan ke rekap semester.');
+            ->with('success', 'Absensi tanggal ' . Carbon::parse($date)->format('d/m/Y') . ' berhasil disimpan dan otomatis disinkronkan ke rekap semester.');
     }
 
     public function monthlyAttendance(Request $request)
@@ -131,7 +131,7 @@ class HomeroomController extends Controller
 
         $monthStr = $request->input('month', date('Y-m'));
         try {
-            $selectedMonth = Carbon::createFromFormat('Y-m', $monthStr)->startOfMonth();
+            $selectedMonth = Carbon::parse($monthStr . '-01')->startOfMonth();
         } catch (\Exception $e) {
             $selectedMonth = Carbon::today()->startOfMonth();
         }
@@ -140,7 +140,7 @@ class HomeroomController extends Controller
         $weekdays = [];
 
         for ($day = 1; $day <= $daysInMonth; $day++) {
-            $currentDate = (clone $selectedMonth)->setDay($day);
+            $currentDate = $selectedMonth->copy()->startOfMonth()->addDays($day - 1);
             if (!$currentDate->isWeekend()) {
                 $weekdays[] = $currentDate;
             }
@@ -156,7 +156,7 @@ class HomeroomController extends Controller
 
         $matrix = [];
         foreach ($dailyRecords as $rec) {
-            $d = is_string($rec->date) ? $rec->date : $rec->date->format('Y-m-d');
+            $d = is_string($rec->date) ? substr($rec->date, 0, 10) : (is_object($rec->date) ? $rec->date->format('Y-m-d') : (string)$rec->date);
             $matrix[$rec->student_id][$d] = $rec->status;
         }
 

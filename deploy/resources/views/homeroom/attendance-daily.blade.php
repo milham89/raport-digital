@@ -8,9 +8,9 @@
         <div>
             <div class="flex items-center gap-2">
                 <span class="badge bg-blue-100 text-blue-700">Senin - Jum'at</span>
-                <span class="text-xs text-slate-400 font-mono">{{ $activeYear?->year }} ({{ $activeYear?->semester }})</span>
+                <span class="text-xs text-slate-400 font-mono">{{ $activeYear ? $activeYear->year : '' }} ({{ $activeYear ? $activeYear->semester : '' }})</span>
             </div>
-            <h2 class="font-bold text-slate-800 text-lg mt-1">Presensi Harian: Kelas {{ $class->name ?? '' }}</h2>
+            <h2 class="font-bold text-slate-800 text-lg mt-1">Presensi Harian: Kelas {{ $class ? $class->name : '' }}</h2>
             <p class="text-xs text-slate-500">Pilih tanggal untuk mencatat absensi harian siswa (Hadir, Sakit, Izin, Alpa).</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
@@ -75,8 +75,8 @@
                         @foreach($students as $index => $s)
                         @php
                             $att = $attendances[$s->id] ?? null;
-                            $curStatus = $att?->status ?? 'H';
-                            $curNote = $att?->note ?? '';
+                            $curStatus = $att && isset($att->status) ? $att->status : 'H';
+                            $curNote = $att && isset($att->note) ? $att->note : '';
                         @endphp
                         <tr class="hover:bg-slate-50/80 transition">
                             <td class="table-cell text-center font-mono text-xs text-slate-400">{{ $index + 1 }}</td>
