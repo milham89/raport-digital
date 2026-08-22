@@ -1,3 +1,6 @@
+@php
+    $schoolSetting = $setting ?? \App\Models\SchoolSetting::getSettings();
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -15,14 +18,20 @@
 <body class="bg-slate-100 font-sans p-4 sm:p-8">
 <div class="no-print max-w-4xl mx-auto mb-6 flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
     <h2 class="font-bold text-slate-800">Cetak Lembar Raport Siswa</h2>
-    <button onclick="window.print()" class="btn-primary px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow">Cetak Dokumen</button>
+    <div class="flex items-center gap-3">
+        <button onclick="window.history.back()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition">Kembali</button>
+        <button onclick="window.print()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow transition">Cetak Dokumen</button>
+    </div>
 </div>
 
 <div class="print-sheet max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-slate-800">
     <div class="text-center border-b-2 border-slate-900 pb-3 mb-5">
-        <h1 class="text-lg font-black uppercase tracking-wider">LAPORAN HASIL CAPAIAN KOMPETENSI PESERTA DIDIK</h1>
-        <p class="text-sm font-semibold">SMA NEGERI INDONESIA</p>
-        <p class="text-xs text-slate-500">Tahun Ajaran {{ $activeYear?->year }} Semester {{ $activeYear?->semester }}</p>
+        <h1 class="text-lg font-black uppercase tracking-wider">{{ $schoolSetting->header_title ?? 'LAPORAN HASIL CAPAIAN KOMPETENSI PESERTA DIDIK' }}</h1>
+        <p class="text-sm font-bold">{{ $schoolSetting->school_name ?? 'SMA NEGERI INDONESIA' }}</p>
+        @if(!empty($schoolSetting->school_address))
+            <p class="text-[11px] text-slate-600">{{ $schoolSetting->school_address }}</p>
+        @endif
+        <p class="text-xs text-slate-500 mt-1">Tahun Ajaran {{ $activeYear?->year }} Semester {{ $activeYear?->semester }}</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 text-xs mb-5">
@@ -73,14 +82,36 @@
         </div>
         <div class="border border-slate-900 p-3 rounded">
             <p class="font-bold border-b border-slate-200 pb-1 mb-1.5">CATATAN WALI KELAS</p>
-            <p class="italic text-slate-600">{{ $remark?->homeroom_note ?? 'Tingkatkan terus semangat belajar dan prestasimu.' }}</p>
+            <p class="italic text-slate-600">{{ $remark?->homeroom_note ?? ($remark?->homeroom_remark ?? 'Tingkatkan terus semangat belajar dan prestasimu.') }}</p>
         </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-2 text-center text-xs mt-8">
-        <div><p>Orang Tua / Wali,</p><div class="h-14"></div><p class="font-bold">( .................... )</p></div>
-        <div><p>Kepala Sekolah,</p><div class="h-14"></div><p class="font-bold">Drs. Budi Santoso, M.Pd.</p></div>
-        <div><p>Wali Kelas,</p><div class="h-14"></div><p class="font-bold">{{ $class->homeroomTeacher->name ?? 'Dewi Lestari, S.Pd.' }}</p></div>
+    <div class="text-xs text-right mb-4">
+        <p>{{ $schoolSetting->report_place ?? 'Jakarta' }}, {{ $schoolSetting->report_date ?? date('d F Y') }}</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2 text-center text-xs mt-2">
+        <div>
+            <p>Orang Tua / Wali Siswa,</p>
+            <div class="h-16"></div>
+            <p class="font-bold">( ........................................ )</p>
+        </div>
+        <div>
+            <p>Kepala Sekolah,</p>
+            <div class="h-16"></div>
+            <p class="font-bold underline">{{ $schoolSetting->principal_name ?? 'Drs. Budi Santoso, M.Pd.' }}</p>
+            @if(!empty($schoolSetting->principal_nip))
+                <p class="text-[11px] text-slate-600">NIP. {{ $schoolSetting->principal_nip }}</p>
+            @endif
+        </div>
+        <div>
+            <p>Wali Kelas,</p>
+            <div class="h-16"></div>
+            <p class="font-bold underline">{{ $class->homeroomTeacher->name ?? '-' }}</p>
+            @if(!empty($class->homeroomTeacher->nip))
+                <p class="text-[11px] text-slate-600">NIP. {{ $class->homeroomTeacher->nip }}</p>
+            @endif
+        </div>
     </div>
 </div>
 </body>

@@ -8,6 +8,8 @@ use App\Models\Student;
 use App\Models\StudentAttendanceRemark;
 use App\Models\AcademicYear;
 use App\Models\Grade;
+use App\Models\SchoolSetting;
+
 
 class HomeroomController extends Controller
 {
@@ -57,6 +59,7 @@ class HomeroomController extends Controller
         $activeYear = AcademicYear::where('is_active', true)->first();
         $grades = Grade::with(['subject','teacher'])->where('student_id',$student->id)->where('academic_year_id',$activeYear->id)->get();
         $remark = StudentAttendanceRemark::where('student_id',$student->id)->where('academic_year_id',$activeYear->id)->first();
-        return view('report.card', compact('student','class','activeYear','grades','remark'));
+        $setting = SchoolSetting::getSettings();
+        return view('report.card', compact('student','class','activeYear','grades','remark','setting'));
     }
 }

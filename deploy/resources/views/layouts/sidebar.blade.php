@@ -19,6 +19,7 @@
             <a href="{{ route('admin.subjects') }}" class="nav-link {{ request()->routeIs('admin.subjects*') ? 'active' : '' }}">Mata Pelajaran</a>
             <a href="{{ route('admin.assignments') }}" class="nav-link {{ request()->routeIs('admin.assignments*') ? 'active' : '' }}">Penugasan Guru</a>
             <a href="{{ route('admin.students') }}" class="nav-link {{ request()->routeIs('admin.students*') ? 'active' : '' }}">Data Siswa & Akun</a>
+            <a href="{{ route('admin.school-settings') }}" class="nav-link {{ request()->routeIs('admin.school-settings*') ? 'active' : '' }}">Format & Sekolah</a>
         @elseif(auth()->user()->isTeacher())
             <p class="sidebar-section">Menu Guru</p>
             <a href="{{ route('teacher.dashboard') }}" class="nav-link {{ request()->routeIs('teacher.*') ? 'active' : '' }}">Input Nilai</a>

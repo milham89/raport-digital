@@ -9,6 +9,7 @@ use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Models\TeacherAssignment;
 use App\Models\Student;
+use App\Models\SchoolSetting;
 
 class AdminController extends Controller
 {
@@ -173,5 +174,39 @@ class AdminController extends Controller
         }
 
         return back()->with('success', 'Password akun ' . $student->name . ' berhasil diperbarui.');
+    }
+
+    public function schoolSettings()
+    {
+        $setting = SchoolSetting::getSettings();
+        return view('admin.school-settings', compact('setting'));
+    }
+
+    public function updateSchoolSettings(Request $request)
+    {
+        $request->validate([
+            'school_name'    => 'required|string|max:255',
+            'school_level'   => 'nullable|string|max:100',
+            'school_address' => 'nullable|string|max:255',
+            'principal_name' => 'required|string|max:255',
+            'principal_nip'  => 'nullable|string|max:50',
+            'report_place'   => 'required|string|max:100',
+            'report_date'    => 'nullable|string|max:100',
+            'header_title'   => 'required|string|max:255',
+        ]);
+
+        $setting = SchoolSetting::getSettings();
+        $setting->update($request->only([
+            'school_name',
+            'school_level',
+            'school_address',
+            'principal_name',
+            'principal_nip',
+            'report_place',
+            'report_date',
+            'header_title',
+        ]));
+
+        return back()->with('success', 'Pengaturan format raport & profil sekolah berhasil disimpan.');
     }
 }

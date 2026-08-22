@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Student;
 use App\Models\Grade;
 use App\Models\StudentAttendanceRemark;
+use App\Models\SchoolSetting;
+
 use App\Models\AcademicYear;
 
 class StudentController extends Controller
@@ -64,8 +66,9 @@ class StudentController extends Controller
             ->first();
 
         $class = $student->schoolClass;
+        $setting = SchoolSetting::getSettings();
 
-        return view('report.card', compact('student', 'class', 'activeYear', 'grades', 'remark'));
+        return view('report.card', compact('student', 'class', 'activeYear', 'grades', 'remark', 'setting'));
     }
 }
 

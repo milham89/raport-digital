@@ -41,6 +41,8 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::post('/students',                       [AdminController::class,'storeStudent'])->name('students.store');
     Route::delete('/students/{student}',           [AdminController::class,'destroyStudent'])->name('students.destroy');
     Route::post('/students/{student}/password',    [AdminController::class,'setStudentPassword'])->name('students.set-password');
+    Route::get('/school-settings',                 [AdminController::class,'schoolSettings'])->name('school-settings');
+    Route::post('/school-settings',                [AdminController::class,'updateSchoolSettings'])->name('school-settings.update');
 });
 
 // Teacher

@@ -14,8 +14,8 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <a href="{{ route('admin.users.create') }}" class="btn-primary">+ Tambah Pengguna</a>
             <a href="{{ route('admin.students') }}" class="btn-secondary">Data Siswa & Akun</a>
+            <a href="{{ route('admin.school-settings') }}" class="btn-secondary">Format & Sekolah</a>
             <a href="{{ route('admin.classes') }}" class="btn-secondary">Kelola Kelas</a>
-            <a href="{{ route('admin.assignments') }}" class="btn-secondary">Penugasan Guru</a>
         </div>
     </div>
 </div>

@@ -6,6 +6,8 @@ use App\Models\SchoolClass;
 use App\Models\Student;
 use App\Models\Grade;
 use App\Models\StudentAttendanceRemark;
+use App\Models\SchoolSetting;
+
 
 class PrincipalController extends Controller
 {
@@ -37,6 +39,7 @@ class PrincipalController extends Controller
             ->where('academic_year_id', $activeYear?->id)
             ->first();
 
-        return view('report.card', compact('student', 'class', 'activeYear', 'grades', 'remark'));
+        $setting = SchoolSetting::getSettings();
+        return view('report.card', compact('student', 'class', 'activeYear', 'grades', 'remark', 'setting'));
     }
 }
