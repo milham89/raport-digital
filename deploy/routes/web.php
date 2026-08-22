@@ -43,7 +43,8 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::delete('/students/{student}',           [AdminController::class,'destroyStudent'])->name('students.destroy');
     Route::post('/students/{student}/password',    [AdminController::class,'setStudentPassword'])->name('students.set-password');
     Route::get('/school-settings',                 [AdminController::class,'schoolSettings'])->name('school-settings');
-    Route::get('/school-settings/preview/{student?}', [AdminController::class,'previewReportCard'])->name('school-settings.preview');
+    Route::get('/school-settings/preview',         [AdminController::class,'previewReportCard'])->name('school-settings.preview');
+    Route::get('/school-settings/preview/{student}', [AdminController::class,'previewReportCard'])->name('school-settings.preview.student');
     Route::post('/school-settings',                [AdminController::class,'updateSchoolSettings'])->name('school-settings.update');
 });
 

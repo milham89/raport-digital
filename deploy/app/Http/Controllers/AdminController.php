@@ -176,26 +176,28 @@ class AdminController extends Controller
         return back()->with('success', 'Password akun ' . $student->name . ' berhasil diperbarui.');
     }
 
-    public function previewReportCard($studentId = null)
+    public function previewReportCard($student = null)
     {
         $activeYear = AcademicYear::where('is_active', true)->first() ?? AcademicYear::first();
-        $student = null;
+        $studentObj = null;
 
-        if ($studentId) {
-            $student = Student::with('schoolClass.homeroomTeacher')->find($studentId);
+        if ($student instanceof Student) {
+            $studentObj = $student;
+        } elseif (is_numeric($student)) {
+            $studentObj = Student::with('schoolClass.homeroomTeacher')->find($student);
         }
 
-        if (!$student) {
-            $student = Student::with('schoolClass.homeroomTeacher')->first();
+        if (!$studentObj) {
+            $studentObj = Student::with('schoolClass.homeroomTeacher')->first();
         }
 
-        if (!$student) {
+        if (!$studentObj) {
             $teacher = (object)['name' => 'Dra. Siti Aminah, M.Pd.', 'nip' => '197503122000032001'];
             $class = (object)[
                 'name' => 'X-MIPA-1',
                 'homeroomTeacher' => $teacher
             ];
-            $student = (object)[
+            $studentData = (object)[
                 'id' => 0,
                 'name' => 'Ahmad Fulan (Contoh Siswa)',
                 'nis' => '2425001',
@@ -217,7 +219,9 @@ class AdminController extends Controller
                 'homeroom_note' => 'Pertahankan prestasi belajarmu dan terus aktif dalam kegiatan sekolah.',
                 'homeroom_remark' => 'Pertahankan prestasi belajarmu dan terus aktif dalam kegiatan sekolah.'
             ];
+            $student = $studentData;
         } else {
+            $student = $studentObj;
             $class = $student->schoolClass;
             $grades = Grade::with(['subject', 'teacher'])
                 ->where('student_id', $student->id)
