@@ -32,15 +32,15 @@
     </div>
 
     <!-- Month Picker -->
-    <div class="card bg-slate-900 text-white border-0 shadow-md p-4">
+    <div class="card bg-slate-800 text-white border-0 shadow-md p-4">
         <form method="GET" action="{{ route('homeroom.attendance.monthly') }}" class="flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-2">
-                <label for="month_input" class="text-xs text-slate-300 font-medium">Pilih Bulan & Tahun:</label>
+                <label for="month_input" class="text-xs text-slate-200 font-medium">Pilih Bulan & Tahun:</label>
                 <input type="month" id="month_input" name="month" value="{{ $selectedMonth->format('Y-m') }}" onchange="this.form.submit()"
-                       class="bg-white/10 border border-white/20 rounded-xl px-3 py-1.5 text-sm text-white font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400">
+                       class="bg-white text-slate-900 border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400">
                 <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">Tampilkan</button>
             </div>
-            <div class="text-xs text-slate-300">
+            <div class="text-xs text-slate-200">
                 Bulan: <strong class="text-white uppercase">{{ $selectedMonth->format('F Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-white">{{ count($weekdays) }} Hari</strong>
             </div>
         </form>
