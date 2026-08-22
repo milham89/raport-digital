@@ -107,9 +107,9 @@
         <div>
             <p>Wali Kelas,</p>
             <div class="h-16"></div>
-            <p class="font-bold underline">{{ $class->homeroomTeacher->name ?? '-' }}</p>
-            @if(!empty($class->homeroomTeacher->nip))
-                <p class="text-[11px] text-slate-600">NIP. {{ $class->homeroomTeacher->nip }}</p>
+            <p class="font-bold underline">{{ $class?->homeroomTeacher?->name ?? ($class?->homeroomTeacher ?? '-') }}</p>
+            @if(!empty($class?->homeroomTeacher?->nip))
+                <p class="text-[11px] text-slate-600">NIP. {{ $class?->homeroomTeacher?->nip }}</p>
             @endif
         </div>
     </div>

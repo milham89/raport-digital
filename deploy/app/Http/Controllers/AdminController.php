@@ -190,18 +190,19 @@ class AdminController extends Controller
         }
 
         if (!$student) {
+            $teacher = (object)['name' => 'Dra. Siti Aminah, M.Pd.', 'nip' => '197503122000032001'];
+            $class = (object)[
+                'name' => 'X-MIPA-1',
+                'homeroomTeacher' => $teacher
+            ];
             $student = (object)[
                 'id' => 0,
                 'name' => 'Ahmad Fulan (Contoh Siswa)',
                 'nis' => '2425001',
                 'nisn' => '0091234001',
                 'gender' => 'L',
-                'schoolClass' => (object)[
-                    'name' => 'X-MIPA-1',
-                    'homeroomTeacher' => (object)['name' => 'Dra. Siti Aminah, M.Pd.', 'nip' => '197503122000032001']
-                ]
+                'schoolClass' => $class
             ];
-            $class = $student->schoolClass;
             $grades = collect([
                 (object)['subject' => (object)['name' => 'Pendidikan Agama dan Budi Pekerti', 'kkm' => 75], 'final_score' => 88, 'letter_grade' => 'A'],
                 (object)['subject' => (object)['name' => 'Pendidikan Pancasila dan Kewarganegaraan', 'kkm' => 75], 'final_score' => 85, 'letter_grade' => 'A'],
