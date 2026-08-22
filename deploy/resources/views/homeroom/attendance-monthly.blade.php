@@ -38,6 +38,14 @@
                 <label for="month_input" class="text-xs text-slate-300 font-medium">Pilih Bulan & Tahun:</label>
                 <input type="month" id="month_input" name="month" value="{{ $selectedMonth->format('Y-m') }}" onchange="this.form.submit()"
                        class="bg-white/10 border border-white/20 rounded-xl px-3 py-1.5 text-sm text-white font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">Tampilkan</button>
+            </div>
+            <div class="text-xs text-slate-300">
+                Bulan: <strong class="text-white uppercase">{{ $selectedMonth->format('F Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-white">{{ count($weekdays) }} Hari</strong>
+            </div>
+        </form>
+    </div>
+
     <!-- Attendance Matrix Table -->
     <div class="card overflow-hidden p-0">
         <div class="overflow-x-auto">
@@ -108,12 +116,4 @@
     </div>
 </div>
 @endsection
-
-                <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">Tampilkan</button>
-            </div>
-            <div class="text-xs text-slate-300">
-                Bulan: <strong class="text-white uppercase">{{ $selectedMonth->format('F Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-white">{{ count($weekdays) }} Hari</strong>
-            </div>
-        </form>
-    </div>
 

@@ -43,6 +43,8 @@
                 <span class="text-amber-300 bg-amber-900/40 px-2 py-0.5 rounded text-[11px] font-semibold">Perhatian: Hari Sabtu/Minggu di luar hari aktif belajar standar</span>
             @endif
         </div>
+    </div>
+    <!-- Attendance Form -->
     <div class="card overflow-hidden p-0">
         <form method="POST" action="{{ route('homeroom.attendance.daily.store') }}" id="attendance-form">
             @csrf
@@ -108,6 +110,8 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
             <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <p class="text-xs text-slate-500"><span class="font-semibold text-slate-700">Keterangan:</span> H = Hadir, S = Sakit, I = Izin, A = Alpa.</p>
                 <button type="submit" class="btn-primary !px-6 py-2.5 font-bold shadow-md shadow-blue-500/30">Simpan Presensi Harian</button>
@@ -122,8 +126,4 @@ function setAllStatus(status) {
 }
 </script>
 @endsection
-
-            </div>
-
-    </div>
 
