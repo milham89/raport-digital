@@ -69,12 +69,12 @@
                         <th class="table-head !text-[11px] !py-2 px-2 text-center bg-slate-200 text-slate-800" title="Persentase Kehadiran">%</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-slate-200">
                     @foreach($students as $idx => $s)
                     @php $sum = $summaries[$s->id] ?? ['h'=>0,'s'=>0,'i'=>0,'a'=>0,'total'=>0,'rate'=>0]; @endphp
                     <tr class="hover:bg-slate-50 transition">
                         <td class="table-cell text-center font-mono text-[11px] text-slate-400 sticky left-0 bg-white z-10">{{ $idx + 1 }}</td>
-                        <td class="table-cell font-semibold text-slate-800 py-2 sticky left-8 bg-white z-10 whitespace-nowrap">
+                        <td class="table-cell font-semibold text-slate-800 py-2 sticky left-8 bg-white z-10 whitespace-nowrap border-r border-slate-200">
                             <span class="block truncate max-w-[160px]">{{ $s->name }}</span>
                         </td>
                         @foreach($weekdays as $w)
@@ -89,7 +89,7 @@
                             elseif ($st === 'A') { $bgCell = 'bg-rose-100 text-rose-800 font-bold'; $textCell = 'A'; }
                             else { $bgCell = 'text-slate-300'; }
                         @endphp
-                        <td class="table-cell text-center !p-1 border-l border-slate-100 {{ in_array($w->dayOfWeek, [1]) ? 'border-l-2 border-slate-200' : '' }}">
+                        <td class="table-cell text-center !p-1 border-l border-slate-200 {{ in_array($w->dayOfWeek, [1]) ? 'border-l-2 border-slate-300' : '' }}">
                             <span class="inline-flex items-center justify-center w-5 h-5 rounded text-[10px] {{ $bgCell }}">{{ $textCell }}</span>
                         </td>
                         @endforeach
@@ -97,13 +97,13 @@
                         <td class="table-cell text-center font-bold bg-blue-50/70 text-blue-800 px-1">{{ $sum['s'] }}</td>
                         <td class="table-cell text-center font-bold bg-amber-50/70 text-amber-800 px-1">{{ $sum['i'] }}</td>
                         <td class="table-cell text-center font-bold bg-rose-50/70 text-rose-800 px-1">{{ $sum['a'] }}</td>
-                        <td class="table-cell text-center font-bold text-slate-800 bg-slate-50 px-2">{{ $sum['rate'] }}%</td>
+                        <td class="table-cell text-center font-bold text-slate-800 bg-slate-50 px-2 border-l border-slate-200">{{ $sum['rate'] }}%</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
+        <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
             <div class="flex items-center gap-4">
                 <span class="font-semibold text-slate-800">Keterangan:</span>
                 <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> H = Hadir</span>

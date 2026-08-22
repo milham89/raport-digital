@@ -21,7 +21,7 @@
     <div class="card overflow-hidden p-0">
         <div class="overflow-x-auto"><table class="w-full">
             <thead><tr><th class="table-head">NIS</th><th class="table-head">Nama Siswa</th><th class="table-head text-center">Rata-rata Nilai</th><th class="table-head text-center">Absensi (S/I/A)</th><th class="table-head text-right">Cetak Raport</th></tr></thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-200">
                 @foreach($students as $s)
                 @php
                     $sGrades = $grades[$s->id] ?? collect();

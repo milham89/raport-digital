@@ -32,7 +32,7 @@
                         <th class="table-head min-w-[280px]">Catatan Perkembangan Siswa</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-slate-200">
                     @foreach($students as $s)
                     @php $rem = $remarks[$s->id] ?? null; @endphp
                     <tr class="hover:bg-slate-50 transition">
@@ -47,7 +47,7 @@
                     @endforeach
                 </tbody>
             </table></div>
-            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <p class="text-xs text-slate-500">Nilai Sakit, Izin, dan Alpa disinkronkan otomatis dari Absensi Harian atau dapat disesuaikan manual.</p>
                 <button type="submit" class="btn-primary !px-6 py-2.5 font-bold shadow-md shadow-blue-500/30">Simpan Catatan & Absensi</button>
             </div>
