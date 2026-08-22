@@ -8,6 +8,7 @@ class SchoolSetting extends Model
 {
     protected $fillable = [
         'school_name',
+        'school_logo',
         'school_level',
         'school_address',
         'principal_name',

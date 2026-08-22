@@ -25,13 +25,20 @@
 </div>
 
 <div class="print-sheet max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-slate-800">
-    <div class="text-center border-b-2 border-slate-900 pb-3 mb-5">
-        <h1 class="text-lg font-black uppercase tracking-wider">{{ $schoolSetting->header_title ?? 'LAPORAN HASIL CAPAIAN KOMPETENSI PESERTA DIDIK' }}</h1>
-        <p class="text-sm font-bold">{{ $schoolSetting->school_name ?? 'SMA NEGERI INDONESIA' }}</p>
-        @if(!empty($schoolSetting->school_address))
-            <p class="text-[11px] text-slate-600">{{ $schoolSetting->school_address }}</p>
+    <div class="border-b-2 border-slate-900 pb-3 mb-5 flex items-center gap-4">
+        @if(!empty($schoolSetting->school_logo))
+            <div class="shrink-0 w-20 h-20 flex items-center justify-center">
+                <img src="{{ asset($schoolSetting->school_logo) }}" alt="Logo Sekolah" class="max-h-20 max-w-20 object-contain">
+            </div>
         @endif
-        <p class="text-xs text-slate-500 mt-1">Tahun Ajaran {{ $activeYear?->year }} Semester {{ $activeYear?->semester }}</p>
+        <div class="flex-1 text-center {{ !empty($schoolSetting->school_logo) ? 'pr-4' : '' }}">
+            <h1 class="text-base sm:text-lg font-black uppercase tracking-wider">{{ $schoolSetting->header_title ?? 'LAPORAN HASIL CAPAIAN KOMPETENSI PESERTA DIDIK' }}</h1>
+            <p class="text-sm font-bold uppercase mt-0.5">{{ $schoolSetting->school_name ?? 'SMA NEGERI INDONESIA' }}</p>
+            @if(!empty($schoolSetting->school_address))
+                <p class="text-[11px] text-slate-600 leading-tight mt-0.5">{{ $schoolSetting->school_address }}</p>
+            @endif
+            <p class="text-xs text-slate-500 font-medium mt-1">Tahun Ajaran {{ $activeYear?->year }} Semester {{ $activeYear?->semester }}</p>
+        </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4 text-xs mb-5">

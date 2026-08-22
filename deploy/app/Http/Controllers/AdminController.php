@@ -263,6 +263,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'school_name'    => 'required|string|max:255',
+            'school_logo'    => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
             'school_level'   => 'nullable|string|max:100',
             'school_address' => 'nullable|string|max:255',
             'principal_name' => 'required|string|max:255',
@@ -273,7 +274,7 @@ class AdminController extends Controller
         ]);
 
         $setting = SchoolSetting::getSettings();
-        $setting->update($request->only([
+        $data = $request->only([
             'school_name',
             'school_level',
             'school_address',
@@ -282,7 +283,24 @@ class AdminController extends Controller
             'report_place',
             'report_date',
             'header_title',
-        ]));
+        ]);
+
+        if ($request->hasFile('school_logo')) {
+            if ($setting->school_logo && file_exists(public_path($setting->school_logo))) {
+                @unlink(public_path($setting->school_logo));
+            }
+            $file = $request->file('school_logo');
+            $filename = 'logo_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/logo'), $filename);
+            $data['school_logo'] = 'uploads/logo/' . $filename;
+        } elseif ($request->boolean('remove_logo')) {
+            if ($setting->school_logo && file_exists(public_path($setting->school_logo))) {
+                @unlink(public_path($setting->school_logo));
+            }
+            $data['school_logo'] = null;
+        }
+
+        $setting->update($data);
 
         return back()->with('success', 'Pengaturan format raport & profil sekolah berhasil disimpan.');
     }

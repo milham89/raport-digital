@@ -19,8 +19,35 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('admin.school-settings.update') }}" class="space-y-5">
+        <form method="POST" action="{{ route('admin.school-settings.update') }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
+
+            <!-- Pengaturan Logo Sekolah -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                <label class="label mb-2 block font-semibold text-slate-800 dark:text-slate-200">Logo Resmi Sekolah</label>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div class="w-20 h-20 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center bg-white dark:bg-slate-900 overflow-hidden shrink-0 shadow-sm">
+                        @if(!empty($setting->school_logo))
+                            <img src="{{ asset($setting->school_logo) }}" alt="Logo Sekolah" class="w-full h-full object-contain p-1">
+                        @else
+                            <div class="text-center p-2 text-slate-400 dark:text-slate-500">
+                                <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <span class="text-[9px] block leading-tight mt-0.5">Tanpa Logo</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <input type="file" name="school_logo" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" class="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-950/80 dark:file:text-blue-300 cursor-pointer">
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Format: PNG, JPG, JPEG, WEBP, atau SVG (Maks. 2MB). Disarankan berlatar transparan.</p>
+                        @if(!empty($setting->school_logo))
+                            <label class="inline-flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 hover:underline cursor-pointer mt-1">
+                                <input type="checkbox" name="remove_logo" value="1" class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                                Hapus logo saat disimpan
+                            </label>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="md:col-span-2">
