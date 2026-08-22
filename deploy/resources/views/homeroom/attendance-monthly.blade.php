@@ -12,7 +12,7 @@
                 <span class="text-xs text-slate-400 font-mono">{{ $activeYear?->year }} ({{ $activeYear?->semester }})</span>
             </div>
             <h2 class="font-bold text-slate-800 text-lg mt-1">Rekap Presensi Bulanan: Kelas {{ $class->name ?? '' }}</h2>
-            <p class="text-xs text-slate-500">Tampilan kalender absensi siswa bulan {{ $selectedMonth->isoFormat('MMMM Y') }}.</p>
+            <p class="text-xs text-slate-500">Tampilan kalender absensi siswa bulan {{ $selectedMonth->format('F Y') }}.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -47,8 +47,8 @@
                         <th class="table-head !text-[11px] !py-2.5 w-8 text-center sticky left-0 bg-slate-100 z-10">No</th>
                         <th class="table-head !text-[11px] !py-2.5 min-w-[170px] sticky left-8 bg-slate-100 z-10">Nama Siswa</th>
                         @foreach($weekdays as $w)
-                        <th class="table-head !text-[10px] !py-1 px-1 text-center font-mono border-l border-slate-200 {{ in_array($w->dayOfWeek, [1]) ? 'border-l-2 border-slate-300' : '' }}" title="{{ $w->isoFormat('dddd, D MMMM Y') }}">
-                            <span class="block text-slate-400 font-normal">{{ substr($w->isoFormat('dd'), 0, 2) }}</span>
+                        <th class="table-head !text-[10px] !py-1 px-1 text-center font-mono border-l border-slate-200 {{ in_array($w->dayOfWeek, [1]) ? 'border-l-2 border-slate-300' : '' }}" title="{{ $w->format('l, d F Y') }}">
+                            <span class="block text-slate-400 font-normal">{{ substr($w->format('D'), 0, 2) }}</span>
                             <a href="{{ route('homeroom.attendance.daily', ['date' => $w->format('Y-m-d')]) }}" class="hover:text-blue-600 hover:underline">
                                 {{ $w->format('d') }}
                             </a>
@@ -112,7 +112,8 @@
                 <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">Tampilkan</button>
             </div>
             <div class="text-xs text-slate-300">
-                Bulan: <strong class="text-white uppercase">{{ $selectedMonth->isoFormat('MMMM Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-white">{{ count($weekdays) }} Hari</strong>
+                Bulan: <strong class="text-white uppercase">{{ $selectedMonth->format('F Y') }}</strong> &bull; Total Hari Efektif: <strong class="text-white">{{ count($weekdays) }} Hari</strong>
             </div>
         </form>
     </div>
+
