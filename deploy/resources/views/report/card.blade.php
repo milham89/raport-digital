@@ -41,7 +41,7 @@
         </div>
         <div>
             <p>Kelas / Semester : {{ $class->name ?? '-' }} / {{ $activeYear?->semester }}</p>
-            <p class="mt-1">Wali Kelas : {{ $class->homeroomTeacher->name ?? '-' }}</p>
+            <p class="mt-1">Wali Kelas : {{ is_object($class?->homeroomTeacher) ? ($class->homeroomTeacher->name ?? '-') : ($class?->homeroomTeacher ?? '-') }}</p>
         </div>
     </div>
 
