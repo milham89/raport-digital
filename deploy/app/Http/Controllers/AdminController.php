@@ -176,11 +176,16 @@ class AdminController extends Controller
         return back()->with('success', 'Password akun ' . $student->name . ' berhasil diperbarui.');
     }
 
-    public function previewReportCard(?Student $student = null)
+    public function previewReportCard($studentId = null)
     {
         $activeYear = AcademicYear::where('is_active', true)->first() ?? AcademicYear::first();
+        $student = null;
 
-        if (!$student || !$student->exists) {
+        if ($studentId) {
+            $student = Student::with('schoolClass.homeroomTeacher')->find($studentId);
+        }
+
+        if (!$student) {
             $student = Student::with('schoolClass.homeroomTeacher')->first();
         }
 
