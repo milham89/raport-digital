@@ -263,7 +263,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'school_name'    => 'required|string|max:255',
-            'school_logo'    => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'school_logo'    => 'nullable|file|mimes:jpeg,png,jpg,webp,svg,gif,ico|max:5120',
             'school_level'   => 'nullable|string|max:100',
             'school_address' => 'nullable|string|max:255',
             'principal_name' => 'required|string|max:255',
@@ -273,35 +273,57 @@ class AdminController extends Controller
             'header_title'   => 'required|string|max:255',
         ]);
 
-        $setting = SchoolSetting::getSettings();
-        $data = $request->only([
-            'school_name',
-            'school_level',
-            'school_address',
-            'principal_name',
-            'principal_nip',
-            'report_place',
-            'report_date',
-            'header_title',
-        ]);
+        try {
+            $setting = SchoolSetting::getSettings();
+            $data = $request->only([
+                'school_name',
+                'school_level',
+                'school_address',
+                'principal_name',
+                'principal_nip',
+                'report_place',
+                'report_date',
+                'header_title',
+            ]);
 
-        if ($request->hasFile('school_logo')) {
-            if ($setting->school_logo && file_exists(public_path($setting->school_logo))) {
-                @unlink(public_path($setting->school_logo));
+            if ($request->hasFile('school_logo')) {
+                $uploadDir = public_path('uploads/logo');
+                if (!is_dir($uploadDir)) {
+                    @mkdir($uploadDir, 0777, true);
+                }
+
+                if (!empty($setting->school_logo) && file_exists(public_path($setting->school_logo))) {
+                    @unlink(public_path($setting->school_logo));
+                }
+
+                $file = $request->file('school_logo');
+                $ext = $file->getClientOriginalExtension() ?: 'png';
+                $filename = 'logo_' . time() . '_' . uniqid() . '.' . $ext;
+                $file->move($uploadDir, $filename);
+                $data['school_logo'] = 'uploads/logo/' . $filename;
+            } elseif ($request->boolean('remove_logo')) {
+                if (!empty($setting->school_logo) && file_exists(public_path($setting->school_logo))) {
+                    @unlink(public_path($setting->school_logo));
+                }
+                $data['school_logo'] = null;
             }
-            $file = $request->file('school_logo');
-            $filename = 'logo_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/logo'), $filename);
-            $data['school_logo'] = 'uploads/logo/' . $filename;
-        } elseif ($request->boolean('remove_logo')) {
-            if ($setting->school_logo && file_exists(public_path($setting->school_logo))) {
-                @unlink(public_path($setting->school_logo));
+
+            // Pastikan kolom school_logo ada di database jika migration belum dijalankan
+            if (\Illuminate\Support\Facades\Schema::hasTable('school_settings') && !\Illuminate\Support\Facades\Schema::hasColumn('school_settings', 'school_logo')) {
+                try {
+                    \Illuminate\Support\Facades\Schema::table('school_settings', function (\Illuminate\Database\Schema\Blueprint $table) {
+                        $table->string('school_logo')->nullable()->after('school_name');
+                    });
+                } catch (\Throwable $e) {
+                    // Abaikan jika sudah ada atau DB constraint
+                }
             }
-            $data['school_logo'] = null;
+
+            $setting->update($data);
+
+            return back()->with('success', 'Pengaturan format raport & logo sekolah berhasil disimpan.');
+        } catch (\Throwable $e) {
+            return back()->withErrors(['error' => 'Gagal menyimpan pengaturan: ' . $e->getMessage()])->withInput();
         }
-
-        $setting->update($data);
-
-        return back()->with('success', 'Pengaturan format raport & profil sekolah berhasil disimpan.');
     }
 }

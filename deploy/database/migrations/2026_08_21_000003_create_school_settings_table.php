@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('school_settings', function (Blueprint $table) {
             $table->id();
             $table->string('school_name')->default('SMA NEGERI INDONESIA');
+            $table->string('school_logo')->nullable();
             $table->string('school_level')->nullable()->default('SMA NEGERI');
             $table->string('school_address')->nullable()->default('Jl. Pendidikan No. 123');
             $table->string('principal_name')->default('Drs. Budi Santoso, M.Pd.');

@@ -20,6 +20,16 @@ class SchoolSetting extends Model
 
     public static function getSettings(): self
     {
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('school_settings') && !\Illuminate\Support\Facades\Schema::hasColumn('school_settings', 'school_logo')) {
+                \Illuminate\Support\Facades\Schema::table('school_settings', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    $table->string('school_logo')->nullable()->after('school_name');
+                });
+            }
+        } catch (\Throwable $e) {
+            // Ignore schema migration issues if any
+        }
+
         return static::firstOrCreate([], [
             'school_name'     => 'SMA NEGERI INDONESIA',
             'school_level'    => 'SMA NEGERI',

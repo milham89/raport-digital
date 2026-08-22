@@ -37,11 +37,11 @@
                         @endif
                     </div>
                     <div class="flex-1 space-y-2">
-                        <input type="file" name="school_logo" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" class="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-950/80 dark:file:text-blue-300 cursor-pointer">
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Format: PNG, JPG, JPEG, WEBP, atau SVG (Maks. 2MB). Disarankan berlatar transparan.</p>
+                        <input type="file" name="school_logo" id="school_logo_input" accept="image/*,.svg,.webp" class="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-950/80 dark:file:text-blue-300 cursor-pointer">
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Format: PNG, JPG, JPEG, WEBP, SVG (Maks. 5MB). Disarankan berlatar transparan.</p>
                         @if(!empty($setting->school_logo))
-                            <label class="inline-flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 hover:underline cursor-pointer mt-1">
-                                <input type="checkbox" name="remove_logo" value="1" class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                            <label class="inline-flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 hover:underline cursor-pointer mt-1">
+                                <input type="checkbox" name="remove_logo" value="1" class="rounded border-slate-300 text-rose-600 focus:ring-rose-500">
                                 Hapus logo saat disimpan
                             </label>
                         @endif
