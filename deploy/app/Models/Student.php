@@ -9,5 +9,6 @@ class Student extends Model
     public function schoolClass()       { return $this->belongsTo(SchoolClass::class, 'class_id'); }
     public function grades()            { return $this->hasMany(Grade::class); }
     public function attendanceRemarks() { return $this->hasMany(StudentAttendanceRemark::class); }
+    public function dailyAttendances()  { return $this->hasMany(DailyAttendance::class); }
     public function userAccount()       { return $this->hasOne(User::class, 'student_id'); }
 }

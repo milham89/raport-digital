@@ -9,6 +9,9 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        if (\Illuminate\Support\Facades\Schema::hasTable('daily_attendances')) {
+            DB::table('daily_attendances')->delete();
+        }
         DB::table('student_attendance_remarks')->delete();
         DB::table('grades')->delete();
         DB::table('teacher_assignments')->delete();

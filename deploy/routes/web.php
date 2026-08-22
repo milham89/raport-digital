@@ -58,6 +58,10 @@ Route::middleware(['auth','role:teacher'])->prefix('teacher')->name('teacher.')-
 // Homeroom
 Route::middleware(['auth','role:homeroom'])->prefix('homeroom')->name('homeroom.')->group(function () {
     Route::get('/',                     [HomeroomController::class,'dashboard'])->name('dashboard');
+    Route::get('/attendance/daily',      [HomeroomController::class,'dailyAttendance'])->name('attendance.daily');
+    Route::post('/attendance/daily',     [HomeroomController::class,'saveDailyAttendance'])->name('attendance.daily.store');
+    Route::get('/attendance/monthly',    [HomeroomController::class,'monthlyAttendance'])->name('attendance.monthly');
+    Route::post('/attendance/sync',      [HomeroomController::class,'syncAttendance'])->name('attendance.sync');
     Route::get('/remarks',              [HomeroomController::class,'remarks'])->name('remarks');
     Route::post('/remarks',             [HomeroomController::class,'saveRemarks'])->name('remarks.store');
     Route::get('/report/{student}',     [HomeroomController::class,'reportCard'])->name('report-card');

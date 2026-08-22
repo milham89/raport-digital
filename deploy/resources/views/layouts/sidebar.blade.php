@@ -26,7 +26,9 @@
         @elseif(auth()->user()->isHomeroom())
             <p class="sidebar-section">Menu Wali Kelas</p>
             <a href="{{ route('homeroom.dashboard') }}" class="nav-link {{ request()->routeIs('homeroom.dashboard') ? 'active' : '' }}">Dashboard</a>
-            <a href="{{ route('homeroom.remarks') }}" class="nav-link {{ request()->routeIs('homeroom.remarks*') ? 'active' : '' }}">Catatan & Absensi</a>
+            <a href="{{ route('homeroom.attendance.daily') }}" class="nav-link {{ request()->routeIs('homeroom.attendance.daily*') ? 'active' : '' }}">Absensi Harian</a>
+            <a href="{{ route('homeroom.attendance.monthly') }}" class="nav-link {{ request()->routeIs('homeroom.attendance.monthly*') ? 'active' : '' }}">Rekap Bulanan</a>
+            <a href="{{ route('homeroom.remarks') }}" class="nav-link {{ request()->routeIs('homeroom.remarks*') ? 'active' : '' }}">Catatan & Rapor</a>
         @elseif(auth()->user()->isPrincipal())
             <p class="sidebar-section">Menu Kepala Sekolah</p>
             <a href="{{ route('principal.dashboard') }}" class="nav-link {{ request()->routeIs('principal.*') ? 'active' : '' }}">Rekap Nilai</a>

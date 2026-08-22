@@ -9,9 +9,13 @@
     </div>
 
     @if($class)
-    <div class="flex justify-between items-center">
-        <h3 class="font-bold text-slate-800 text-base">Daftar Nilai Rapor Siswa</h3>
-        <a href="{{ route('homeroom.remarks') }}" class="btn-primary">Input Absensi & Catatan Wali &rarr;</a>
+    <div class="flex flex-wrap justify-between items-center gap-3">
+        <h3 class="font-bold text-slate-800 text-base">Daftar Nilai & Presensi Rapor Siswa</h3>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('homeroom.attendance.daily') }}" class="btn-primary !text-xs font-semibold">Absensi Harian (Senin - Jum'at)</a>
+            <a href="{{ route('homeroom.attendance.monthly') }}" class="btn-secondary !text-xs font-semibold">Rekap Bulanan</a>
+            <a href="{{ route('homeroom.remarks') }}" class="btn-secondary !text-xs font-semibold">Catatan & Absensi Rapor &rarr;</a>
+        </div>
     </div>
 
     <div class="card overflow-hidden p-0">
