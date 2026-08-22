@@ -38,10 +38,12 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::post('/assignments',                    [AdminController::class,'storeAssignment'])->name('assignments.store');
     Route::delete('/assignments/{assignment}',     [AdminController::class,'destroyAssignment'])->name('assignments.destroy');
     Route::get('/students',                        [AdminController::class,'students'])->name('students');
+    Route::get('/students/{student}/report',        [AdminController::class,'previewReportCard'])->name('students.report');
     Route::post('/students',                       [AdminController::class,'storeStudent'])->name('students.store');
     Route::delete('/students/{student}',           [AdminController::class,'destroyStudent'])->name('students.destroy');
     Route::post('/students/{student}/password',    [AdminController::class,'setStudentPassword'])->name('students.set-password');
     Route::get('/school-settings',                 [AdminController::class,'schoolSettings'])->name('school-settings');
+    Route::get('/school-settings/preview/{student?}', [AdminController::class,'previewReportCard'])->name('school-settings.preview');
     Route::post('/school-settings',                [AdminController::class,'updateSchoolSettings'])->name('school-settings.update');
 });
 

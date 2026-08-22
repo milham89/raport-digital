@@ -10,7 +10,13 @@
                 <h3 class="text-base font-bold text-slate-800">Identitas Sekolah & Kop Raport</h3>
                 <p class="text-xs text-slate-500 mt-0.5">Informasi ini akan tercetak pada kop atas, isi lembar, serta tanda tangan raport.</p>
             </div>
-            <span class="badge bg-blue-100 text-blue-700">Tampilan Cetak</span>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.school-settings.preview') }}" target="_blank" class="btn-secondary !py-1.5 !px-3 text-xs flex items-center gap-1.5 font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    Preview Format Raport
+                </a>
+                <span class="badge bg-blue-100 text-blue-700">Tampilan Cetak</span>
+            </div>
         </div>
 
         <form method="POST" action="{{ route('admin.school-settings.update') }}" class="space-y-5">

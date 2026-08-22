@@ -55,6 +55,7 @@
                             @endif
                         </td>
                         <td class="table-cell text-right space-x-1.5 whitespace-nowrap">
+                            <a href="{{ route('admin.students.report', $s) }}" target="_blank" class="btn-secondary !py-1 !px-2.5 !text-xs text-blue-600 border-blue-200 bg-blue-50 hover:bg-blue-100 font-semibold">Preview Raport</a>
                             <button @click="modalOpen = true; modalStudent = '{{ $s->id }}'; modalName = '{{ $s->name }}'" class="btn-info">Set Pass</button>
                             <form method="POST" action="{{ route('admin.students.destroy', $s) }}" class="inline" onsubmit="return confirm('Hapus siswa dan akunnya?')">
                                 @csrf @method('DELETE')

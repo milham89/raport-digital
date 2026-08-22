@@ -176,6 +176,71 @@ class AdminController extends Controller
         return back()->with('success', 'Password akun ' . $student->name . ' berhasil diperbarui.');
     }
 
+    public function previewReportCard(?Student $student = null)
+    {
+        $activeYear = AcademicYear::where('is_active', true)->first() ?? AcademicYear::first();
+
+        if (!$student || !$student->exists) {
+            $student = Student::with('schoolClass.homeroomTeacher')->first();
+        }
+
+        if (!$student) {
+            $student = (object)[
+                'id' => 0,
+                'name' => 'Ahmad Fulan (Contoh Siswa)',
+                'nis' => '2425001',
+                'nisn' => '0091234001',
+                'gender' => 'L',
+                'schoolClass' => (object)[
+                    'name' => 'X-MIPA-1',
+                    'homeroomTeacher' => (object)['name' => 'Dra. Siti Aminah, M.Pd.', 'nip' => '197503122000032001']
+                ]
+            ];
+            $class = $student->schoolClass;
+            $grades = collect([
+                (object)['subject' => (object)['name' => 'Pendidikan Agama dan Budi Pekerti', 'kkm' => 75], 'final_score' => 88, 'letter_grade' => 'A'],
+                (object)['subject' => (object)['name' => 'Pendidikan Pancasila dan Kewarganegaraan', 'kkm' => 75], 'final_score' => 85, 'letter_grade' => 'A'],
+                (object)['subject' => (object)['name' => 'Bahasa Indonesia', 'kkm' => 75], 'final_score' => 86, 'letter_grade' => 'A'],
+                (object)['subject' => (object)['name' => 'Matematika Umum', 'kkm' => 75], 'final_score' => 82, 'letter_grade' => 'B'],
+                (object)['subject' => (object)['name' => 'Bahasa Inggris', 'kkm' => 75], 'final_score' => 84, 'letter_grade' => 'B'],
+            ]);
+            $remark = (object)[
+                'sick' => 1,
+                'permission' => 0,
+                'unexcused' => 0,
+                'homeroom_note' => 'Pertahankan prestasi belajarmu dan terus aktif dalam kegiatan sekolah.',
+                'homeroom_remark' => 'Pertahankan prestasi belajarmu dan terus aktif dalam kegiatan sekolah.'
+            ];
+        } else {
+            $class = $student->schoolClass;
+            $grades = Grade::with(['subject', 'teacher'])
+                ->where('student_id', $student->id)
+                ->when($activeYear, fn($q) => $q->where('academic_year_id', $activeYear->id))
+                ->get();
+
+            if ($grades->isEmpty()) {
+                $grades = collect([
+                    (object)['subject' => (object)['name' => 'Matematika Umum', 'kkm' => 75], 'final_score' => 85, 'letter_grade' => 'A'],
+                    (object)['subject' => (object)['name' => 'Bahasa Indonesia', 'kkm' => 75], 'final_score' => 88, 'letter_grade' => 'A'],
+                    (object)['subject' => (object)['name' => 'Bahasa Inggris', 'kkm' => 75], 'final_score' => 80, 'letter_grade' => 'B'],
+                ]);
+            }
+
+            $remark = StudentAttendanceRemark::where('student_id', $student->id)
+                ->when($activeYear, fn($q) => $q->where('academic_year_id', $activeYear->id))
+                ->first() ?? (object)[
+                    'sick' => 0,
+                    'permission' => 0,
+                    'unexcused' => 0,
+                    'homeroom_note' => 'Pertahankan semangat belajar dan prestasimu.',
+                    'homeroom_remark' => 'Pertahankan semangat belajar dan prestasimu.'
+                ];
+        }
+
+        $setting = SchoolSetting::getSettings();
+        return view('report.card', compact('student', 'class', 'activeYear', 'grades', 'remark', 'setting'));
+    }
+
     public function schoolSettings()
     {
         $setting = SchoolSetting::getSettings();
