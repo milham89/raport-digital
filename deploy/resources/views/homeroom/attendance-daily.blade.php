@@ -19,25 +19,26 @@
         </div>
     </div>
 
-    <div class="card bg-slate-800 text-white border-0 shadow-md p-4">
+    <!-- Date Navigation Header (Clean Light Card) -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <a href="{{ route('homeroom.attendance.daily', ['date' => $prevDate->format('Y-m-d')]) }}" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-semibold text-white transition flex items-center gap-1.5">
+            <a href="{{ route('homeroom.attendance.daily', ['date' => $prevDate->format('Y-m-d')]) }}" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 transition flex items-center gap-1.5 border border-slate-200">
                 &larr; {{ $prevDate->format('D, d M') }}
             </a>
             <form method="GET" action="{{ route('homeroom.attendance.daily') }}" class="flex items-center gap-2">
-                <label for="date_input" class="text-xs text-slate-200 font-medium">Tanggal:</label>
+                <label for="date_input" class="text-xs text-slate-600 font-bold">Tanggal:</label>
                 <input type="date" id="date_input" name="date" value="{{ $selectedDate->format('Y-m-d') }}" onchange="this.form.submit()"
-                       class="bg-white text-slate-900 border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">Buka</button>
+                       class="bg-slate-50 text-slate-800 border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">Buka</button>
             </form>
-            <a href="{{ route('homeroom.attendance.daily', ['date' => $nextDate->format('Y-m-d')]) }}" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-semibold text-white transition flex items-center gap-1.5">
+            <a href="{{ route('homeroom.attendance.daily', ['date' => $nextDate->format('Y-m-d')]) }}" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 transition flex items-center gap-1.5 border border-slate-200">
                 {{ $nextDate->format('D, d M') }} &rarr;
             </a>
         </div>
-        <div class="mt-3 pt-3 border-t border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
+        <div class="mt-3 pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
             <div class="flex items-center gap-2 font-medium">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                <span class="text-slate-200">Hari terpilih: <strong class="text-white uppercase">{{ $selectedDate->format('l, d F Y') }}</strong></span>
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="text-slate-600">Hari terpilih: <strong class="text-slate-900 uppercase font-bold">{{ $selectedDate->format('l, d F Y') }}</strong></span>
             </div>
             @if($isWeekend)
                 <span class="text-amber-800 bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-lg text-xs font-semibold">Perhatian: Hari Sabtu/Minggu di luar hari aktif belajar standar</span>
